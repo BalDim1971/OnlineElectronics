@@ -62,8 +62,8 @@ class Vendor(models.Model):
         return f'{self.level} {self.name} (создано {self.date_create})'
 
     class Meta:
-        verbose_name = 'продукт'  # Настройка наименования одного объекта
-        verbose_name_plural = 'продукты'  # Настройка для наименования набора
+        verbose_name = 'объект'  # Настройка наименования одного объекта
+        verbose_name_plural = 'объекты'  # Настройка для наименования набора
         ordering = ('name',)
 
     def clean_fields(self, exclude=None):
