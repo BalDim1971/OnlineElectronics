@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from django.http import HttpResponseNotFound
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import (CreateAPIView, RetrieveAPIView,
                                      UpdateAPIView, DestroyAPIView,
                                      ListAPIView)
 
 from vendor.models import Vendor
-from vendor.permissions import IsActive
+from users.permissions import IsActive
 from vendor.serializers import VendorSerializer, VendorUpdateSerializer
 
 

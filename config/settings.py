@@ -165,4 +165,5 @@ SPECTACULAR_SETTINGS = {
    'TITLE': 'Онлайн-платформа торговой сети электроники',
    'DESCRIPTION': 'API документация проекта Онлайн-платформа',
    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
 }

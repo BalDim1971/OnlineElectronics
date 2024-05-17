@@ -1,7 +1,5 @@
-from django.contrib import admin
 from django.urls import path
-from vendor.apps import VendorConfig
-from vendor.views import (VendorListApiView, VendorCreateApiView, 
+from vendor.views import (VendorListApiView, VendorCreateApiView,
                           VendorRetrieveApiView, VendorUpdateApiView,
                           VendorDestroyApiView)
 

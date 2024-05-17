@@ -20,9 +20,9 @@ class Vendor(models.Model):
     date_create - Время создания (заполняется автоматически при создании).
     """
 
-    FACTORY = '0'
-    RETAIL_NETWORK = '1'
-    INDIVIDUAL_ENTREPRENEUR = '2'
+    FACTORY = 0
+    RETAIL_NETWORK = 1
+    INDIVIDUAL_ENTREPRENEUR = 2
 
     LEVEL_TYPE = (
         (FACTORY, 'Завод'),
@@ -32,7 +32,7 @@ class Vendor(models.Model):
 
     name = models.CharField(max_length=100, verbose_name='Название')
     seller_type = models.PositiveIntegerField(
-        choices=LEVEL_TYPE, verbose_name='Тип', default=0
+        choices=LEVEL_TYPE, verbose_name='Тип', default=FACTORY
     )
     level = models.PositiveIntegerField(verbose_name='Уровень', default=0)
     contacts = models.ForeignKey(
@@ -79,7 +79,7 @@ class Vendor(models.Model):
             raise ValidationError('Уровень объекта должен быть на 1 выше, '
                                   'чем уровень поставщика')
         # у завода не может быть задолженности перед поставщиком
-        if self.seller_type == 0 and (self.debt is not None or self.debt != 0):
+        if self.seller_type == 0 and self.debt != 0:
             raise ValidationError('У завода не может быть задолженности '
                                   'перед поставщиком')
         if self.debt < 0:
