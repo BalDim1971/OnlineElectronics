@@ -3,6 +3,7 @@ from django.utils.html import format_html
 
 from vendor.models import Vendor
 
+
 @admin.register(Vendor)
 class VendorAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'seller_type', 'vendor_url')

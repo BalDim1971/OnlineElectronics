@@ -32,7 +32,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -45,7 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'drf_spectacular',
-
+    'rest_framework_simplejwt',
     'vendor',
     'contacts',
     'products',
@@ -82,7 +81,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -95,7 +93,6 @@ DATABASES = {
         'HOST': os.getenv('POSTGRES_HOST')
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -115,7 +112,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -126,7 +122,6 @@ TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -147,13 +142,16 @@ LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'
 
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.SearchFilter',
         'rest_framework.filters.OrderingFilter',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_PAGINATION_CLASS':
         'rest_framework.pagination.PageNumberPagination',
@@ -162,8 +160,8 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
-   'TITLE': 'Онлайн-платформа торговой сети электроники',
-   'DESCRIPTION': 'API документация проекта Онлайн-платформа',
-   'VERSION': '1.0.0',
+    'TITLE': 'Онлайн-платформа торговой сети электроники',
+    'DESCRIPTION': 'API документация проекта Онлайн-платформа',
+    'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
 }

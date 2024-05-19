@@ -18,7 +18,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+from drf_spectacular.views import (SpectacularAPIView,
+                                   SpectacularSwaggerView,
+                                   SpectacularRedocView)
 
 
 urlpatterns = [
@@ -31,6 +33,7 @@ urlpatterns = [
     path('vendor/', include('vendor.urls')),
     path('contacts/', include('contacts.urls')),
     path('products/', include('products.urls')),
+    path('users/', include('users.urls', namespace='users'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 admin.site.site_header = "Панель администрирования"
