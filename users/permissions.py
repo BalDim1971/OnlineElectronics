@@ -1,27 +1,13 @@
-from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import BasePermission
 
 
+class IsStaff(BasePermission):
+    """ Проверка на персонал... """
+
+    def has_object_permission(self, request, view, obj):
+        return request.user.is_staff
+
+
 class IsActive(BasePermission):
-    """
-    Проверяет, активен ли пользователь.
-    """
-    message = "Пользователь - неактивен"
-
     def has_permission(self, request, view):
-        return request.user.is_authenticated and request.user.is_active
-
-
-class IsVerifiedUser(BasePermission):
-    """
-    Проверяет, есть ли у пользователя разрешение на доступ
-    к запрашиваемому представлению.
-    """
-    def has_permission(self, request, view):
-        # Проверяем, не является ли пользователь анонимным
-        if not request.user.is_authenticated:
-            return False
-        elif request.user.is_authorized:
-            return True
-        raise PermissionDenied("Пользователь не авторизован или не прошел "
-                               "проверку верификации")
+        return request.user.is_active
