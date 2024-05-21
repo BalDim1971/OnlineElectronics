@@ -6,13 +6,16 @@ from vendor.models import Vendor
 
 @admin.register(Vendor)
 class VendorAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'seller_type', 'vendor_url')
+    list_display = ('id', 'name', 'seller_type', 'vendor_url', 'debt')
     list_display_links = ('id', 'name', 'seller_type')
-    list_filter = ('seller_type', 'contacts__country')
+    list_filter = ('seller_type', 'contacts__country', 'contacts__city')
     actions = ['make_published']
 
     def contacts_country(self, obj):
         return obj.contacts.country
+
+    def contacts_city(self, obj):
+        return obj.contacts.city
 
     def vendor_url(self, obj):
         if obj.vendor:
