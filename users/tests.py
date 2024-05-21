@@ -14,7 +14,7 @@ class UsersTestCase(APITestCase):
     """
     def setUp(self) -> None:
         """
-        Тестовый пользователь admin
+        Суперпользователь admin и один тестовый для удаления/обновления
         """
         self.user = User(email='admin@sky.pro',
                          first_name='Admin',
@@ -36,6 +36,15 @@ class UsersTestCase(APITestCase):
             HTTP_AUTHORIZATION=f'Bearer {self.access_token}'
         )
         self.headers = {'HTTP_AUTHORIZATION': f'Bearer {self.access_token}'}
+
+        self.test_user = User(
+            email="test@sky.pro",
+            is_superuser=False,
+            is_staff=True,
+            is_active=True,
+            password="test1234",
+        )
+        self.test_user.save()
 
     def test_create_user(self):
         """
@@ -66,36 +75,17 @@ class UsersTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['email'], self.user.email)
 
-    # def test_update_user(self):
-    #     """
-    #     Тест операции обновления (update) пользователя
-    #     """
-    #     update_url = reverse('users:user_update',
-    #                          args=[self.user.id])
-    #     print(update_url)
-    #     updated_data = {
-    #         "city": "Mycity",
-    #         "phone": "222222222",
-    #     }
-    #     response = self.client.patch(update_url, updated_data, format='json')
-    #     print(response.json())
-    #
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-    #     self.user.refresh_from_db()
-    #     self.assertEqual(self.user.phone, updated_data['phone'])
-    #     self.assertEqual(self.user.city, updated_data['city'])
-    #
-    # def test_delete_user(self):
-    #     """
-    #     Тест операции удаления (delete) пользователя
-    #     """
-    #     delete_url = reverse('users:user_delete',
-    #                          args=[self.user.id])
-    #     response = self.client.delete(delete_url)
-    #
-    #     self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-    #     self.assertFalse(User.objects.filter(id=self.user.id).exists())
-    #
+    def test_delete_user(self):
+        """
+        Тест операции удаления (delete) пользователя
+        """
+        delete_url = reverse('users:users_delete',
+                             args=[self.test_user.id])
+        response = self.client.delete(delete_url)
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertFalse(User.objects.filter(id=self.test_user.id).exists())
+
     def test_list_user(self):
         """
         Тест операции получения списка пользователя

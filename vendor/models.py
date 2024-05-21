@@ -44,7 +44,7 @@ class Vendor(models.Model):
         to='products.Product',
         verbose_name='Продукция'
     )
-    vendor = models.ForeignKey(to='Vendor', on_delete=models.PROTECT,
+    vendor = models.ForeignKey(to='self', on_delete=models.SET_NULL,
                                verbose_name='Поставщик',
                                related_name='vendor_up',
                                **NULLABLE)

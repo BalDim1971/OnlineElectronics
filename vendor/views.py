@@ -5,7 +5,9 @@ from rest_framework.generics import (CreateAPIView, RetrieveAPIView,
 
 from vendor.models import Vendor
 from users.permissions import IsActive
-from vendor.serializers import (VendorSerializer, VendorUpdateSerializer)
+from vendor.serializers import (VendorSerializer,
+                                VendorUpdateSerializer,
+                                VendorRetrieveSerializer)
 
 
 class VendorListApiView(ListAPIView):
@@ -26,7 +28,8 @@ class VendorCreateApiView(CreateAPIView):
 
 class VendorRetrieveApiView(RetrieveAPIView):
     """Подробности о продавце"""
-    serializer_class = VendorSerializer
+    serializer_class = VendorRetrieveSerializer
+    # serializer_class = VendorSerializer
     permission_classes = [IsActive]
     queryset = Vendor.objects.all()
 
